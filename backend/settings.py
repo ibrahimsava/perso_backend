@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django.contrib.gis',  # `django.contrib.gis` est nécessaire pour les champs géospatiaux
     "api",
     "accounts",
     "payments",
@@ -69,7 +70,8 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+         #Modification ici pour activer le support spatial
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": os.getenv("POSTGRES_DB"),
         "USER": os.getenv("POSTGRES_USER"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
@@ -77,6 +79,10 @@ DATABASES = {
         "PORT": os.getenv("POSTGRES_PORT"),
     }
 }
+
+
+# cette ligne a ete rajouter pour dire au model d'utiliser le account user customiser que j'ai fait dans account model
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation

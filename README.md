@@ -170,38 +170,6 @@ transport_project/
 Modèles de données (Django ORM)
 python
 
-# accounts/models.py
-class User(AbstractUser):
-    phone_number = models.CharField(max_length=15, unique=True)
-    is_verified = models.BooleanField(default=False)
-    user_type = models.CharField(max_length=10, choices=[
-        ('client', 'Client'),
-        ('convoyeur', 'Convoyeur'),
-        ('admin', 'Administrateur')
-    ])
-    created_at = models.DateTimeField(auto_now_add=True)
-
-class ConvoyeurProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    vehicle_type = models.CharField(max_length=20, choices=[
-        ('moto', 'Moto'),
-        ('voiture', 'Voiture'),
-        ('velo', 'Vélo')
-    ])
-    vehicle_plate = models.CharField(max_length=20)
-    license_number = models.CharField(max_length=50)
-    is_approved = models.BooleanField(default=False)
-    rating = models.FloatField(default=0.0)
-    total_rides = models.IntegerField(default=0)
-    current_location = models.PointField(null=True, blank=True)
-    is_available = models.BooleanField(default=True)
-    bank_info = models.JSONField()  # Pour virements
-
-class ClientProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    total_rides = models.IntegerField(default=0)
-    saved_addresses = models.JSONField(default=list)
-
 python
 
 # rides/models.py

@@ -2,10 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from django.contrib.gis import admin
-from .models import ConvoyeurProfile
-
-@admin.register(ConvoyeurProfile)
-class ConvoyeurProfileAdmin(admin.GISModelAdmin):
-    list_display = ('user', 'vehicle_type', 'is_available')
+# Personnalisation des titres de l'interface
+admin.site.site_header = "Ibrahim Transport Administration"
+admin.site.index_title = "Bienvenue sur la gestion de Ibrahim Transport"
 

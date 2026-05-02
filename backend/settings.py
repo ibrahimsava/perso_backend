@@ -81,8 +81,6 @@ DATABASES = {
 }
 
 
-# cette ligne a ete rajouter pour dire au model d'utiliser le account user customiser que j'ai fait dans account model
-AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation

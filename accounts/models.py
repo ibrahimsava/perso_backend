@@ -43,6 +43,12 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+
+####################################################################################
+
+# le profil du client debute ici 
+
+
 class ClientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='client_profile')
     profile_photo = models.ImageField(upload_to='client_profiles/', blank=True, null=True)
@@ -51,22 +57,29 @@ class ClientProfile(models.Model):
     home_address = models.CharField(max_length=255, blank=True)
     work_location = gis_models.PointField(blank=True, null=True)
     work_address = models.CharField(max_length=255, blank=True)
-    preferred_payment_method = models.CharField(
-        max_length=20,
-        choices=[('orange_money', 'Orange Money'), ('mtn_money', 'MTN Money'), ('card', 'Card')],
-        default='orange_money'
-    )
-    total_rides = models.PositiveIntegerField(default=0)
     average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=5.0, validators=[MinValueValidator(0), MaxValueValidator(5)])
-    total_spent = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     is_verified = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"Client: {self.user.username}"
+
+##############################################################################
+### le profil convoyeur et ses attributs 
+
 
 class ConvoyeurProfile(models.Model):
-    VERIFICATION_STATUS = [('pending', 'Pending'), ('verified', 'Verified'), ('rejected', 'Rejected'), ('suspended', 'Suspended')]
-    VEHICLE_TYPE = [('motorcycle', 'Motorcycle'), ('car', 'Car'), ('truck', 'Truck'), ('van', 'Van')]
+    VERIFICATION_STATUS = [
+        ('pending', 'Pending'), 
+        ('verified', 'Verified'), 
+        ('rejected', 'Rejected'), 
+        ('suspended', 'Suspended')]
+    
+    VEHICLE_TYPE = [
+                    ('voiture', 'Voiture'), 
+                   ('motorcycle', 'Motorcycle'),  
+                   ('velo', 'Velo')]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='convoyeur_profile')
     profile_photo = models.ImageField(upload_to='convoyeur_profiles/', blank=True, null=True)
@@ -74,30 +87,21 @@ class ConvoyeurProfile(models.Model):
     vehicle_type = models.CharField(max_length=20, choices=VEHICLE_TYPE, default='motorcycle')
     vehicle_plate = models.CharField(max_length=20, blank=True)
     vehicle_model = models.CharField(max_length=100, blank=True)
-    vehicle_color = models.CharField(max_length=50, blank=True)
-    national_id = models.CharField(max_length=50, blank=True)
+    numero_id = models.CharField(max_length=50, blank=True)
     national_id_photo = models.ImageField(upload_to='convoyeur_docs/', blank=True, null=True)
     driver_license = models.CharField(max_length=50, blank=True)
     driver_license_photo = models.ImageField(upload_to='convoyeur_docs/', blank=True, null=True)
     vehicle_registration = models.CharField(max_length=50, blank=True)
     vehicle_registration_photo = models.ImageField(upload_to='convoyeur_docs/', blank=True, null=True)
     verification_status = models.CharField(max_length=20, choices=VERIFICATION_STATUS, default='pending')
-    verification_notes = models.TextField(blank=True)
     verified_at = models.DateTimeField(blank=True, null=True)
     current_location = gis_models.PointField(blank=True, null=True)
     location_updated_at = models.DateTimeField(blank=True, null=True)
     is_available = models.BooleanField(default=False)
-    bank_name = models.CharField(max_length=100, blank=True)
-    account_number = models.CharField(max_length=50, blank=True)
-    account_holder_name = models.CharField(max_length=100, blank=True)
-    mobile_money_number = models.CharField(max_length=20, blank=True)
     total_rides = models.PositiveIntegerField(default=0)
     average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=5.0, validators=[MinValueValidator(0), MaxValueValidator(5)])
-    total_earnings = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-    acceptance_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    completion_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    cancellation_count = models.PositiveIntegerField(default=0)
-    years_of_experience = models.PositiveIntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     joined_date = models.DateField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f"Convoyeurs: {self.user.username}"

@@ -1,6 +1,5 @@
-# payments/models.py
 from django.db import models
-from accounts.models import User, ClientProfile, ConvoyeurProfile
+from accounts.models import ClientProfile, ConvoyeurProfile
 from rides.models import Ride
 
 

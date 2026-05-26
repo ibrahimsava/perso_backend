@@ -32,6 +32,10 @@ INSTALLED_APPS = [
     "accounts",
     "payments",
     "rides",
+    "notifications",
+    "geolocation",
+    
+
 ]
 
 MIDDLEWARE = [

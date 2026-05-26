@@ -102,8 +102,5 @@ class ConvoyeurProfile(models.Model):
     average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=5.0, validators=[MinValueValidator(0), MaxValueValidator(5)])
     joined_date = models.DateField(auto_now_add=True)
    
-
-
-
     def __str__(self):
         return f"Convoyeurs: {self.user.username}"

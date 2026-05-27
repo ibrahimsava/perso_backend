@@ -14,6 +14,13 @@ class User(AbstractUser):
         ('convoyeur', _('Convoyeur')),
         ('admin', _('Administrator')),
     ]
+    # Override username field to allow non-unique values
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+        unique=False,
+        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+    )
 ###################################################################################
     # Override ManyToMany fields with custom related_names
     # cette modification est nécessaire pour éviter les conflits avec les champs de groupe et de permission de Django
